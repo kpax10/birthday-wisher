@@ -1,21 +1,20 @@
-# import smtplib
-#
-# my_email = "timmyt345345@gmail.com"
-# password = "qbtnsxioriyqxijz"
-#
-# with smtplib.SMTP("smtp.gmail.com") as connection:
-#     connection.starttls()
-#     connection.login(user=my_email, password=password)
-#     connection.sendmail(
-#         from_addr=my_email,
-#         to_addrs="anniet345345@yahoo.com",
-#         msg="Subject:Hello\n\nThis is the body of my email."
-#     )
-
-
 import datetime as dt
+import random
+import smtplib
 
-now = dt.datetime.now()
-year = now.year
-print(year)
+MY_EMAIL = "timmyt345345@gmail.com"
+MY_PASSWORD = "qbtnsxioriyqxijz"
 
+today = dt.datetime.now().weekday()
+if today == 4:
+    with open("quotes.txt") as file:
+        lines = file.readlines()
+        random_quote = random.choice(lines)
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs="anniet345345@yahoo.com",
+            msg=f"Subject:Today's Quote\n\n{random_quote}"
+        )
